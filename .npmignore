@@ -1,15 +1,13 @@
-# Configuration files
+.github/
 .prettierrc
 .gitignore
 .eslintrc
 .babelrc
+.jest-cache/
+.jest-coverage/
 yarn.lock
-
-# Dependencies
 node_modules/
-
-# Source code
 src/
-
-# Test results
 coverage/
+babel.config.js
+jest.config.js
