@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint src/* --fix",
-    "test": "jest --collectCoverage"
+    "test": "jest --collectCoverage",
+    "build": "babel src --out-dir lib"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
