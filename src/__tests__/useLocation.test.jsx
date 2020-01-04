@@ -89,7 +89,7 @@ describe('useLocation', () => {
 
       fn({
         key: 'Enter',
-        currentTarget: { value: 'full!' },
+        target: { value: 'full!' },
       });
       expect(spy).toHaveBeenCalledWith('page');
       expect(spy).not.toHaveBeenCalledWith('search');
@@ -104,7 +104,7 @@ describe('useLocation', () => {
         'delete',
       );
 
-      fn({ key: 'Enter', currentTarget: { value: '' } });
+      fn({ key: 'Enter', target: { value: '' } });
       expect(spy).toHaveBeenCalledWith('search');
       expect(next).toHaveBeenCalled();
     });

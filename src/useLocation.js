@@ -33,13 +33,13 @@ export default (search) => {
     },
 
     handleSearch(next) {
-      return ({ key, currentTarget }) => {
+      return ({ key, target }) => {
         if (key !== 'Enter') return;
 
-        if (!isString(currentTarget.value)) {
+        if (!isString(target.value)) {
           params.delete('search');
         } else {
-          params.set('search', currentTarget.value);
+          params.set('search', target.value);
         }
 
         params.delete('page');
