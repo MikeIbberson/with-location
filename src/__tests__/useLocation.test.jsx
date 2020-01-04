@@ -64,7 +64,7 @@ describe('useLocation', () => {
       );
       const fn = useLocation('?search').clearByName(next);
       fn({
-        target: { name: 'foo' },
+        currentTarget: { name: 'foo' },
         stopPropagation: jest.fn(),
       });
 
@@ -87,8 +87,25 @@ describe('useLocation', () => {
         'delete',
       );
 
-      fn({ key: 'Enter', target: { value: 'full!' } });
+      fn({
+        key: 'Enter',
+        currentTarget: { value: 'full!' },
+      });
       expect(spy).toHaveBeenCalledWith('page');
+      expect(spy).not.toHaveBeenCalledWith('search');
+      expect(next).toHaveBeenCalled();
+    });
+
+    it('should clear the search query', () => {
+      const next = jest.fn();
+      const fn = useLocation('?search').handleSearch(next);
+      const spy = jest.spyOn(
+        Parameters.prototype,
+        'delete',
+      );
+
+      fn({ key: 'Enter', currentTarget: { value: '' } });
+      expect(spy).toHaveBeenCalledWith('search');
       expect(next).toHaveBeenCalled();
     });
   });

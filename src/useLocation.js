@@ -26,20 +26,20 @@ export default (search) => {
     clearByName(next) {
       return (e) => {
         e.stopPropagation();
-        params.delete(e.target.name);
+        params.delete(e.currentTarget.name);
         params.redirect();
         next();
       };
     },
 
     handleSearch(next) {
-      return ({ key, target }) => {
+      return ({ key, currentTarget }) => {
         if (key !== 'Enter') return;
 
-        if (!isString(target.value)) {
+        if (!isString(currentTarget.value)) {
           params.delete('search');
         } else {
-          params.set('search', target.value);
+          params.set('search', currentTarget.value);
         }
 
         params.delete('page');
