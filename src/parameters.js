@@ -27,6 +27,6 @@ export default class extends URLSearchParams {
 
   redirect() {
     const str = this.toString();
-    navigate(str ? `?${str}` : '');
+    navigate(str ? `?${str}` : '?');
   }
 }
