@@ -109,4 +109,19 @@ describe('useLocation', () => {
       expect(next).toHaveBeenCalled();
     });
   });
+
+  describe('"getAll"', () => {
+    it('should reduce forEach method results', () => {
+      jest
+        .spyOn(Parameters.prototype, 'forEach')
+        .mockImplementation((v) => {
+          v('foo', 'bar');
+        });
+
+      const output = useLocation().getAll();
+      expect(output).toMatchObject({
+        foo: 'bar',
+      });
+    });
+  });
 });

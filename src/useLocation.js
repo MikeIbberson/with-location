@@ -17,6 +17,20 @@ export default (search) => {
       return null;
     },
 
+    getAll() {
+      const output = {};
+
+      try {
+        params.forEach((value, key) => {
+          output[value] = key;
+        });
+      } catch (e) {
+        // noop
+      }
+
+      return output;
+    },
+
     pushTo(values) {
       params.merge(values);
       params.redirect();
