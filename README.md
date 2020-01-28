@@ -17,6 +17,7 @@
 | `pushTo`       | Add a new value to the query string                                             | `any`                |
 | `clearByName`  | Create a curried callback for clear-style UI elements                           | `fn` => `event`      |
 | `handleSearch` | Create a submit callback for handling search inputs (will delete paged queries) | `fn` => `event`      |
+| `getAll`       | Returns an object of all params in play                                         |                      |
 
 <h2>Example</h2>
 
