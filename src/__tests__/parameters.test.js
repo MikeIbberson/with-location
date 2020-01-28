@@ -48,8 +48,8 @@ describe('Parameters', () => {
 
       expect(remove).toHaveBeenCalledWith('friends');
       expect(set).toHaveBeenCalledWith(
-        'colleagues[]',
-        colleagues,
+        'colleagues',
+        colleagues.join(','),
       );
 
       expect(set).toHaveBeenCalledWith('name', name);

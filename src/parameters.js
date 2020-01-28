@@ -18,7 +18,7 @@ export default class extends URLSearchParams {
       if (!v || (Array.isArray(v) && !v.length)) {
         this.delete(key);
       } else if (Array.isArray(v)) {
-        this.set(`${key}[]`, v);
+        this.set(`${key}`, v.join(','));
       } else {
         this.set(key, v);
       }
