@@ -44,12 +44,28 @@ describe('Parameters', () => {
         colleagues,
         name,
         age: null,
+        bestFriend: {
+          name: 'Frank',
+          birthday: {
+            month: 'April',
+          },
+        },
       });
 
       expect(remove).toHaveBeenCalledWith('friends');
       expect(set).toHaveBeenCalledWith(
         'colleagues',
         colleagues.join(','),
+      );
+
+      expect(set).toHaveBeenCalledWith(
+        'bestFriend.name',
+        'Frank',
+      );
+
+      expect(set).toHaveBeenCalledWith(
+        'bestFriend.birthday.month',
+        'April',
       );
 
       expect(set).toHaveBeenCalledWith('name', name);

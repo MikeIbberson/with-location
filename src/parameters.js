@@ -1,4 +1,5 @@
 import { navigate } from '@reach/router';
+import flat from 'flat';
 
 export default class extends URLSearchParams {
   populate(a = {}) {
@@ -19,6 +20,10 @@ export default class extends URLSearchParams {
         this.delete(key);
       } else if (Array.isArray(v)) {
         this.set(`${key}`, v.join(','));
+      } else if (typeof v === 'object') {
+        Object.entries(flat(v)).forEach(([name, value]) => {
+          this.set(`${key}.${name}`, value);
+        });
       } else {
         this.set(key, v);
       }
