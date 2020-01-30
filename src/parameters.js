@@ -1,5 +1,6 @@
 import { navigate } from '@reach/router';
 import flat from 'flat';
+import { isEmpty, serializeArray } from './utils';
 
 export default class extends URLSearchParams {
   populate(a = {}) {
@@ -16,14 +17,19 @@ export default class extends URLSearchParams {
 
   merge(a) {
     Object.entries(a).forEach(([key, v]) => {
-      if (!v || (Array.isArray(v) && !v.length)) {
+      if (isEmpty(v)) {
         this.delete(key);
       } else if (Array.isArray(v)) {
-        this.set(`${key}`, v.join(','));
+        this.set(`${key}`, serializeArray(v));
       } else if (typeof v === 'object') {
-        Object.entries(flat(v)).forEach(([name, value]) => {
-          this.set(`${key}.${name}`, value);
-        });
+        Object.entries(flat(v, { safe: true })).forEach(
+          ([name, value]) => {
+            this.set(
+              `${key}.${name}`,
+              serializeArray(value),
+            );
+          },
+        );
       } else {
         this.set(key, v);
       }

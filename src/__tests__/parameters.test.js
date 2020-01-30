@@ -44,6 +44,11 @@ describe('Parameters', () => {
         colleagues,
         name,
         age: null,
+        isFriendly: false,
+        isFoolish: undefined,
+        favouriteFoods: {
+          mexican: ['Burrito', 'Fajita'],
+        },
         bestFriend: {
           name: 'Frank',
           birthday: {
@@ -59,6 +64,11 @@ describe('Parameters', () => {
       );
 
       expect(set).toHaveBeenCalledWith(
+        'favouriteFoods.mexican',
+        'Burrito,Fajita',
+      );
+
+      expect(set).toHaveBeenCalledWith(
         'bestFriend.name',
         'Frank',
       );
@@ -68,8 +78,14 @@ describe('Parameters', () => {
         'April',
       );
 
+      expect(set).toHaveBeenCalledWith('isFriendly', false);
       expect(set).toHaveBeenCalledWith('name', name);
+
+      expect(set).not.toHaveBeenCalledWith('age');
+      expect(set).not.toHaveBeenCalledWith('isFoolish');
+
       expect(remove).toHaveBeenCalledWith('age');
+      expect(remove).toHaveBeenCalledWith('isFoolish');
     });
   });
 });
