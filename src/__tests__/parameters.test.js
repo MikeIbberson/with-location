@@ -57,6 +57,8 @@ describe('Parameters', () => {
             month: 'April',
           },
         },
+        testAll: '*',
+        testNone: '!*',
       });
 
       expect(remove).toHaveBeenCalledWith('friends');
@@ -80,6 +82,8 @@ describe('Parameters', () => {
         'April',
       );
 
+      expect(set).toHaveBeenCalledWith('testAll', '');
+      expect(set).toHaveBeenCalledWith('!testNone', '');
       expect(set).toHaveBeenCalledWith('isFriendly', false);
       expect(set).toHaveBeenCalledWith('name', name);
 

@@ -1,6 +1,11 @@
 import { navigate } from '@reach/router';
 import flat from 'flat';
-import { isEmpty, serializeArray } from './utils';
+import {
+  isEmpty,
+  serializeArray,
+  asEmpty,
+  asInverted,
+} from './utils';
 
 export default class extends URLSearchParams {
   populate(a = {}) {
@@ -18,7 +23,7 @@ export default class extends URLSearchParams {
   serializeAndAssign(key, v) {
     const arr = serializeArray(v);
     if (arr.length) {
-      this.set(key, serializeArray(arr));
+      this.set(asInverted(key, arr), asEmpty(arr));
     } else {
       this.delete(key);
     }
@@ -40,7 +45,7 @@ export default class extends URLSearchParams {
           },
         );
       } else {
-        this.set(key, v);
+        this.set(asInverted(key, v), asEmpty(v));
       }
     });
   }

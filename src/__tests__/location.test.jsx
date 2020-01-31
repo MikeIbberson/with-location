@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import { withLocation, LocationProvider } from '..';
 
 let Hoc;
-const Mock = () => <div />
+const Mock = () => <div />;
 
 const hookDecorators = expect.objectContaining({
   getFrom: expect.any(Function),
@@ -27,9 +27,11 @@ describe('withLocation', () => {
   });
 
   it('should return a high-order function', () => {
-    expect(mount(<Hoc />).find(Mock).props()).toMatchObject(
-      hookDecorators,
-    );
+    expect(
+      mount(<Hoc />)
+        .find(Mock)
+        .props(),
+    ).toMatchObject(hookDecorators);
   });
 });
 

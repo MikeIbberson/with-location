@@ -8,3 +8,9 @@ export const isEmpty = (v) =>
 
 export const serializeArray = (v) =>
   Array.isArray(v) ? v.join(',') : v;
+
+export const asEmpty = (v) =>
+  v === '*' || v === '!*' ? '' : v;
+
+export const asInverted = (key, v) =>
+  v === '!*' ? `!${key}` : key;
