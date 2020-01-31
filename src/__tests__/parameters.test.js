@@ -51,6 +51,8 @@ describe('Parameters', () => {
         },
         bestFriend: {
           name: 'Frank',
+          email: '',
+          ages: [],
           birthday: {
             month: 'April',
           },
@@ -83,6 +85,13 @@ describe('Parameters', () => {
 
       expect(set).not.toHaveBeenCalledWith('age');
       expect(set).not.toHaveBeenCalledWith('isFoolish');
+      expect(set).not.toHaveBeenCalledWith(
+        'bestFriend.ages',
+      );
+
+      expect(set).not.toHaveBeenCalledWith(
+        'bestFriend.email',
+      );
 
       expect(remove).toHaveBeenCalledWith('age');
       expect(remove).toHaveBeenCalledWith('isFoolish');
