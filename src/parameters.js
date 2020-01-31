@@ -15,18 +15,23 @@ export default class extends URLSearchParams {
     );
   }
 
+  serializeAndAssign(key, v) {
+    const arr = serializeArray(v);
+    if (arr.length) this.set(`${key}`, serializeArray(arr));
+  }
+
   merge(a) {
     Object.entries(a).forEach(([key, v]) => {
       if (isEmpty(v)) {
         this.delete(key);
       } else if (Array.isArray(v)) {
-        this.set(`${key}`, serializeArray(v));
+        this.serializeAndAssign(key, v);
       } else if (typeof v === 'object') {
         Object.entries(flat(v, { safe: true })).forEach(
           ([name, value]) => {
-            this.set(
+            this.serializeAndAssign(
               `${key}.${name}`,
-              serializeArray(value),
+              value,
             );
           },
         );
