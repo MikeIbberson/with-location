@@ -17,7 +17,11 @@ export default class extends URLSearchParams {
 
   serializeAndAssign(key, v) {
     const arr = serializeArray(v);
-    if (arr.length) this.set(`${key}`, serializeArray(arr));
+    if (arr.length) {
+      this.set(key, serializeArray(arr));
+    } else {
+      this.delete(key);
+    }
   }
 
   merge(a) {

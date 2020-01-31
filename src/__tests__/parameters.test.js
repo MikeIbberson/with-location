@@ -95,6 +95,12 @@ describe('Parameters', () => {
 
       expect(remove).toHaveBeenCalledWith('age');
       expect(remove).toHaveBeenCalledWith('isFoolish');
+      expect(remove).toHaveBeenCalledWith(
+        'bestFriend.email',
+      );
+      expect(remove).toHaveBeenCalledWith(
+        'bestFriend.ages',
+      );
     });
   });
 });
