@@ -5,7 +5,7 @@ const isObject = (v) =>
 
 const isString = (v) => typeof v === 'string' && v.length;
 
-export default (search) => {
+export default (search, navigate) => {
   const params = new Parameters(search);
 
   return {
@@ -33,7 +33,7 @@ export default (search) => {
 
     pushTo(values) {
       params.merge(values);
-      params.redirect();
+      navigate(params.redirectStr());
       window.scrollTo(0, 0);
     },
 
@@ -41,7 +41,7 @@ export default (search) => {
       return (e) => {
         e.stopPropagation();
         params.delete(e.currentTarget.name);
-        params.redirect();
+        navigate(params.redirectStr());
         next();
       };
     },
@@ -57,7 +57,7 @@ export default (search) => {
         }
 
         params.delete('page');
-        params.redirect();
+        navigate(params.redirectStr());
         next();
       };
     },

@@ -6,6 +6,10 @@ jest.mock('@reach/router', () => ({
   navigate: jest.fn(),
 }));
 
+beforeEach(() => {
+  navigate.mockReset();
+});
+
 describe('useLocation', () => {
   describe('getFrom', () => {
     it('should invoke populate on object', () => {
@@ -42,8 +46,9 @@ describe('useLocation', () => {
         .spyOn(Parameters.prototype, 'toString')
         .mockReturnValue('foo=bar');
 
-      useLocation('?search').pushTo(input);
+      useLocation('?search', navigate).pushTo(input);
       expect(spy).toHaveBeenCalledWith(input);
+      expect(navigate).toHaveBeenCalled();
       expect(navigate).toHaveBeenCalledWith('?foo=bar');
       expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
     });
@@ -62,7 +67,10 @@ describe('useLocation', () => {
         Parameters.prototype,
         'delete',
       );
-      const fn = useLocation('?search').clearByName(next);
+      const fn = useLocation(
+        '?search',
+        jest.fn(),
+      ).clearByName(next);
       fn({
         currentTarget: { name: 'foo' },
         stopPropagation: jest.fn(),
@@ -75,13 +83,19 @@ describe('useLocation', () => {
 
   describe('handleSearch', () => {
     it('should do nothing', () => {
-      const fn = useLocation('?search').handleSearch();
+      const fn = useLocation(
+        '?search',
+        jest.fn(),
+      ).handleSearch();
       expect(fn({ key: 'Noop' })).toBeUndefined();
     });
 
     it('should clear the page', () => {
       const next = jest.fn();
-      const fn = useLocation('?search').handleSearch(next);
+      const fn = useLocation(
+        '?search',
+        navigate,
+      ).handleSearch(next);
       const spy = jest.spyOn(
         Parameters.prototype,
         'delete',
@@ -94,11 +108,15 @@ describe('useLocation', () => {
       expect(spy).toHaveBeenCalledWith('page');
       expect(spy).not.toHaveBeenCalledWith('search');
       expect(next).toHaveBeenCalled();
+      expect(navigate).toHaveBeenCalled();
     });
 
     it('should clear the search query', () => {
       const next = jest.fn();
-      const fn = useLocation('?search').handleSearch(next);
+      const fn = useLocation(
+        '?search',
+        navigate,
+      ).handleSearch(next);
       const spy = jest.spyOn(
         Parameters.prototype,
         'delete',
@@ -106,6 +124,7 @@ describe('useLocation', () => {
 
       fn({ key: 'Enter', target: { value: '' } });
       expect(spy).toHaveBeenCalledWith('search');
+      expect(navigate).toHaveBeenCalled();
       expect(next).toHaveBeenCalled();
     });
   });

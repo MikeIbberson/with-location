@@ -1,4 +1,3 @@
-import { navigate } from '@reach/router';
 import flat from 'flat';
 import {
   isEmpty,
@@ -50,8 +49,8 @@ export default class extends URLSearchParams {
     });
   }
 
-  redirect() {
+  redirectStr() {
     const str = this.toString();
-    navigate(str ? `?${str}` : '?');
+    return str ? `?${str}` : '?';
   }
 }

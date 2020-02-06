@@ -5,8 +5,12 @@ import useLocation from './useLocation';
 
 export const LocationProvider = ({ children }) => (
   <Location>
-    {({ location }) => {
-      const methods = useLocation(location.search);
+    {({ location, navigate }) => {
+      const methods = useLocation(
+        location.search,
+        navigate,
+      );
+
       return children(methods);
     }}
   </Location>
@@ -18,8 +22,12 @@ LocationProvider.propTypes = {
 
 export const withLocation = (Component) => (props) => (
   <Location>
-    {({ location }) => {
-      const methods = useLocation(location.search);
+    {({ location, navigate }) => {
+      const methods = useLocation(
+        location.search,
+        navigate,
+      );
+
       return <Component {...props} {...methods} />;
     }}
   </Location>
