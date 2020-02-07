@@ -132,9 +132,15 @@ describe('useLocation', () => {
   describe('"getAll"', () => {
     it('should reduce forEach method results', () => {
       jest
-        .spyOn(Parameters.prototype, 'forEach')
-        .mockImplementation((v) => {
-          v('foo', 'bar');
+        .spyOn(Parameters.prototype, 'entries')
+        .mockImplementation(() => {
+          const iterable = {
+            *[Symbol.iterator]() {
+              yield ['foo', 'bar'];
+            },
+          };
+
+          return iterable;
         });
 
       const output = useLocation().getAll();

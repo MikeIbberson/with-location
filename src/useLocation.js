@@ -7,9 +7,11 @@ const isString = (v) => typeof v === 'string' && v.length;
 
 export default (search, navigate) => {
   const params = new Parameters(search);
+  const redirect = () => navigate(params.redirectStr());
 
   return {
     params,
+    redirect,
 
     getFrom(key) {
       if (isObject(key)) return params.populate(key);
@@ -21,9 +23,11 @@ export default (search, navigate) => {
       const output = {};
 
       try {
-        params.forEach((value, key) => {
-          output[value] = key;
-        });
+        // eslint-disable-next-line
+        for (const pair of params.entries()) {
+          // eslint-disable-next-line
+          output[pair[0]] = pair[1];
+        }
       } catch (e) {
         // noop
       }
@@ -33,7 +37,7 @@ export default (search, navigate) => {
 
     pushTo(values) {
       params.merge(values);
-      navigate(params.redirectStr());
+      redirect();
       window.scrollTo(0, 0);
     },
 
@@ -41,7 +45,7 @@ export default (search, navigate) => {
       return (e) => {
         e.stopPropagation();
         params.delete(e.currentTarget.name);
-        navigate(params.redirectStr());
+        redirect();
         next();
       };
     },
@@ -57,7 +61,7 @@ export default (search, navigate) => {
         }
 
         params.delete('page');
-        navigate(params.redirectStr());
+        redirect();
         next();
       };
     },
