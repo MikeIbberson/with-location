@@ -127,6 +127,19 @@ describe('useLocation', () => {
       expect(navigate).toHaveBeenCalled();
       expect(next).toHaveBeenCalled();
     });
+
+    it('should clear the search query', () => {
+      const next = jest.fn();
+      const fn = useLocation(
+        '?search',
+        navigate,
+      ).handleSearch(next, '/search');
+
+      fn({ key: 'Enter', target: { value: '' } });
+      expect(navigate).toHaveBeenCalledWith(
+        '/search?foo=bar',
+      );
+    });
   });
 
   describe('"getAll"', () => {

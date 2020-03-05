@@ -7,7 +7,12 @@ const isString = (v) => typeof v === 'string' && v.length;
 
 export default (search, navigate) => {
   const params = new Parameters(search);
-  const redirect = () => navigate(params.redirectStr());
+
+  const redirect = (prefix) => {
+    const query = params.redirectStr();
+    const path = prefix ? `${prefix}${query}` : query;
+    return navigate(path);
+  };
 
   return {
     params,
@@ -50,7 +55,7 @@ export default (search, navigate) => {
       };
     },
 
-    handleSearch(next) {
+    handleSearch(next, redirectPath) {
       return ({ key, target }) => {
         if (key !== 'Enter') return;
 
@@ -61,7 +66,7 @@ export default (search, navigate) => {
         }
 
         params.delete('page');
-        redirect();
+        redirect(redirectPath);
         next();
       };
     },
