@@ -30,6 +30,7 @@ export const withLocation = (Component) => (props) => (
 
       return (
         <Component
+          navigate={navigate}
           location={location}
           {...props}
           {...methods}
