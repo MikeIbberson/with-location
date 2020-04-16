@@ -28,7 +28,13 @@ export const withLocation = (Component) => (props) => (
         navigate,
       );
 
-      return <Component {...props} {...methods} />;
+      return (
+        <Component
+          location={location}
+          {...props}
+          {...methods}
+        />
+      );
     }}
   </Location>
 );
