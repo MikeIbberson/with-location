@@ -6,6 +6,20 @@ jest.mock('@reach/router', () => ({
   navigate: jest.fn(),
 }));
 
+beforeAll(() => {
+  jest
+    .spyOn(Parameters.prototype, 'entries')
+    .mockImplementation(() => {
+      const iterable = {
+        *[Symbol.iterator]() {
+          yield ['foo', 'bar'];
+        },
+      };
+
+      return iterable;
+    });
+});
+
 beforeEach(() => {
   navigate.mockReset();
 });
@@ -42,9 +56,6 @@ describe('useLocation', () => {
 
       const input = { foo: 'bar' };
       const spy = jest.spyOn(Parameters.prototype, 'merge');
-      jest
-        .spyOn(Parameters.prototype, 'toString')
-        .mockReturnValue('foo=bar');
 
       useLocation('?search', navigate).pushTo(input);
       expect(spy).toHaveBeenCalledWith(input);
@@ -144,18 +155,6 @@ describe('useLocation', () => {
 
   describe('"getAll"', () => {
     it('should reduce forEach method results', () => {
-      jest
-        .spyOn(Parameters.prototype, 'entries')
-        .mockImplementation(() => {
-          const iterable = {
-            *[Symbol.iterator]() {
-              yield ['foo', 'bar'];
-            },
-          };
-
-          return iterable;
-        });
-
       const output = useLocation().getAll();
       expect(output).toMatchObject({
         foo: 'bar',

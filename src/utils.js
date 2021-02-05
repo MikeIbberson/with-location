@@ -14,3 +14,19 @@ export const asEmpty = (v) =>
 
 export const asInverted = (key, v) =>
   v === '!*' ? `!${key}` : key;
+
+export const forEachParam = (instance) => {
+  const output = {};
+
+  try {
+    // eslint-disable-next-line
+    for (const pair of instance.entries()) {
+      // eslint-disable-next-line
+      output[pair[0]] = pair[1];
+    }
+  } catch (e) {
+    // noop
+  }
+
+  return output;
+};

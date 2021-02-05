@@ -5,6 +5,7 @@ import {
   serializeArray,
   asEmpty,
   asInverted,
+  forEachParam,
 } from './utils';
 
 /**
@@ -56,7 +57,16 @@ URLSearchParams.prototype.merge = function(a) {
 };
 
 URLSearchParams.prototype.redirectStr = function() {
-  const str = this.toString();
+  const output = forEachParam(this);
+  const str = Object.entries(output)
+    .map(([key, value]) => {
+      const left = encodeURIComponent(key);
+      return value
+        ? `${left}=${encodeURIComponent(value)}`
+        : left;
+    })
+    .join('&');
+
   return str ? `?${str}` : '?';
 };
 

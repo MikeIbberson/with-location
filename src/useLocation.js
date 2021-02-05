@@ -1,4 +1,5 @@
 import Parameters from './parameters';
+import { forEachParam } from './utils';
 
 const isObject = (v) =>
   typeof v === 'object' && Object.keys(v).length;
@@ -25,19 +26,7 @@ export default (search, navigate) => {
     },
 
     getAll() {
-      const output = {};
-
-      try {
-        // eslint-disable-next-line
-        for (const pair of params.entries()) {
-          // eslint-disable-next-line
-          output[pair[0]] = pair[1];
-        }
-      } catch (e) {
-        // noop
-      }
-
-      return output;
+      return forEachParam(params);
     },
 
     pushTo(values) {
